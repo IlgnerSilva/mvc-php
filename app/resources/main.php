@@ -1,16 +1,9 @@
 <?php
-    $db = new clsDBapp();
-    $sql = "SELECT nome, email FROM teste";
-    $values = CCGetListValues($db, $sql);
-
-    foreach ($values as $item) {
-        var_dump($item);
-    }
-
+    //print_r(json_encode($user->getUsers(["id", "nome", "email", "(SELECT nome FROM teste2 WHERE id = teste.id) AS id"], "teste")));
     if(isset($_POST['acao'])){
         $user = new User();
         if($_POST['nome'] && $_POST['email']){
-            $user->addUser($_POST['nome'], $_POST['email']);
+            $user->addUser("teste", $_POST['nome'], $_POST['email']);
             header("Location: /");
         }
     }
@@ -33,7 +26,7 @@
                 </div>
 
                 <div class="email ">
-                    <label for="email">Senha</label>
+                    <label for="email">Emali</label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nome" name="email" type="email" required />
                 </div>
 

@@ -121,7 +121,7 @@ class clsMenu {
   var $controls = array();
   var $ControlsVisible = array();
 
-  var $CCSEvents = "";
+  var $CCSEvents = array();
   var $CCSEventResult;
 
   var $RelativePath = "";
@@ -132,7 +132,7 @@ class clsMenu {
   var $IdField;
   var $RootId;
 
-  function clsMenu($ParentField, $IdField, $RootId) {
+  function __construct($ParentField, $IdField, $RootId) {
     $this->ParentField = $ParentField;
     $this->RootId      = $RootId;
     $this->IdField     = $IdField;
@@ -358,7 +358,7 @@ class clsSQLParameters
 
   public $Parameters1;
 
-  function clsSQLParameters($ErrorBlock = "")
+  function __construct($ErrorBlock = "")
   {
     $this->ErrorBlock = $ErrorBlock;
   }
@@ -380,8 +380,9 @@ class clsSQLParameters
     if(isset($this->Parameters) && is_array($this->Parameters))
     {
       reset($this->Parameters);
-      while ($blnResult && list ($key, $Parameter) = each ($this->Parameters)) 
-      {
+      foreach($this->Parameters as $key => $Parameter) {
+        if(!$blnResult)
+          continue;
         if($Parameter->GetValue() === "" && $Parameter->GetValue() !== false && $Parameter->UseIsNull === false)
           $blnResult = false;
       }
@@ -579,7 +580,7 @@ class clsSQLParameter
   public $Text;
   
 
-  function clsSQLParameter($ParameterSource, $DataType, $Format, $DBFormat, $InitValue, $DefaultValue, $UseIsNull = false, $ErrorBlock = "")
+  function __construct($ParameterSource, $DataType, $Format, $DBFormat, $InitValue, $DefaultValue, $UseIsNull = false, $ErrorBlock = "")
   {
     $this->Value = NULL;
 
@@ -848,7 +849,7 @@ class clsControl
   public $Values;
   public $IsNull = true;
 
-  public $CCSEvents;
+  public $CCSEvents = array();
   public $CCSEventResult;
 
   public $Parent;
@@ -856,14 +857,14 @@ class clsControl
   public $Attributes;
 
 
-  function clsControl($ControlType, $Name, $Caption, $DataType, $Format, $InitValue = "", & $Parent)
+  function __construct($ControlType, $Name, $Caption, $DataType, $Format, $InitValue = "", & $Parent)
   {
     global $ControlTypes;
 
     $this->Text = "";
     $this->Page = "";
     $this->Parameters = "";
-    $this->CCSEvents = "";
+    $this->CCSEvents = array();
     $this->Values = "";
     $this->BoundColumn = "";
     $this->TextColumn = "";
@@ -1406,7 +1407,7 @@ class clsField
   public $IsNull = true;
   public $DBValue = "";
 
-  function clsField($Name, $DataType, $DBFormat)
+  function __construct($Name, $DataType, $DBFormat)
   {
     $this->Name = $Name;
     $this->DataType = $DataType;
@@ -1542,14 +1543,14 @@ class clsButton
   public $Visible;
   public $Pressed;
 
-  public $CCSEvents = "";
+  public $CCSEvents = array();
   public $CCSEventResult;
 
   public $Parent;
 
   public $Attributes;
 
-  function clsButton($Name, $Method, & $Parent)
+  function __construct($Name, $Method, & $Parent)
   {
     $this->Name    = $Name;
     $this->Visible = true;
@@ -1588,7 +1589,7 @@ class clsPanel
   public $Components = array();
   public $ComponentsArray = array();
 
-  public $CCSEvents = "";
+  public $CCSEvents = array();
   public $CCSEventResult;
   public $PlaceholderName;
   public $MasterPage;
@@ -1598,7 +1599,7 @@ class clsPanel
   public $GenerateDiv = false;
   public $PanelId = "";
 
-  function clsPanel($Name, & $Parent)
+  function __construct($Name, & $Parent)
   {
     global $CCSFormFilter;
     $this->Name = $Name;
@@ -1694,14 +1695,14 @@ class clsFileUpload
   public $Text;
   public $State;
 
-  public $CCSEvents = "";
+  public $CCSEvents = array();
   public $CCSEventResult;
 
   public $Parent;
 
   public $Attributes;
 
-  function clsFileUpload($Name, $Caption, $TemporaryFolder, $FileFolder, $AllowedFileMasks, $DisallowedFileMasks, $FileSizeLimit, & $Parent)
+  function __construct($Name, $Caption, $TemporaryFolder, $FileFolder, $AllowedFileMasks, $DisallowedFileMasks, $FileSizeLimit, & $Parent)
   {
     global $CCSLocales;
 
@@ -2037,9 +2038,9 @@ class clsCaptcha {
  public $Attributes;
  public $Errors = array();
  public $CCSEventResult;
- public $CCSEvents;
+ public $CCSEvents = array();
 
- function clsCaptcha($Name, $Caption = "", $InitValue, $Width, $Height, $SessionName, $CaseSensitive, & $Parent) {
+ function __construct($Name, $Caption = "", $InitValue, $Width, $Height, $SessionName, $CaseSensitive, & $Parent) {
   $this->Name        = $Name;
   $this->Parent      = & $Parent;
   $this->Visible     = true;
@@ -2103,12 +2104,12 @@ class clsDatePicker
 
   public $Attributes;
 
-  public $CCSEvents = "";
+  public $CCSEvents = array();
   public $CCSEventResult;
 
   public $Parent;
 
-  function clsDatePicker($Name, $FormName, $ControlName, & $Parent)
+  function __construct($Name, $FormName, $ControlName, & $Parent)
   {
     $this->Name        = $Name;
     $this->FormName    = $FormName;
@@ -2151,7 +2152,7 @@ class clsErrors
   public $ErrorsCount;
   public $ErrorDelimiter;
 
-  function clsErrors()
+  function __construct()
   {
     global $CCSIsXHTML;
     $this->Errors = array();
@@ -2207,7 +2208,7 @@ class clsSection
   public $CCSEventResult;
   public $Parent;
   public $Attributes;
-  function clsSection(& $Parent) {
+  function __construct(& $Parent) {
     $this->Parent = & $Parent;
   }
 
@@ -2243,7 +2244,7 @@ class clsLocaleInfo {
   public $PHPLocale;
   public $Weekend;
 
-  function clsLocaleInfo($name, $LocaleInfoArray) {
+  function __construct($name, $LocaleInfoArray) {
     $this->Name = $name;
     $this->Language = $LocaleInfoArray[0];
     $this->Country = $LocaleInfoArray[1];
@@ -2316,7 +2317,7 @@ class clsLocale {
   public $Messages;
   public $InternalEncoding = "UTF-8";
 
-  function clsLocale($name, $LocaleInfoArray, $dir = "") {
+  function __construct($name, $LocaleInfoArray, $dir = "") {
     $this->Name = $name;
     $this->Dir = $dir;
     $this->Translations = array();
@@ -2481,7 +2482,7 @@ class clsLocales {
   public $Locales;
   public $Dir;
 
-  function clsLocales($dir, $locale = "")  {
+  function __construct($dir, $locale = "")  {
     $this->Dir = $dir;
     $this->Locale = $locale;
     $this->DefaultLocale = "";
@@ -2619,7 +2620,7 @@ class clsAttribute {
   public  $Value;
   public  $Text;
 
-  function clsAttribute($Name, $Prefix, $DataType="", $Format = "") {
+  function __construct($Name, $Prefix, $DataType="", $Format = "") {
     $this->Name = $Name;
     $this->Prefix = $Prefix;
     if ($this->DataType)
@@ -2672,7 +2673,7 @@ class clsAttributes {
   public $Accumulate = "";
   public $Prefix = "";
 
-  function clsAttributes($Prefix) {
+  function __construct($Prefix) {
     $this->Prefix = $Prefix;
   }
 
@@ -2748,12 +2749,12 @@ class clsFlashChart {
   public $Width = 640;
   public $Height = 480;
   
-  public $CCSEvents = "";
+  public $CCSEvents = array();
   public $CCSEventResult;
 
   public $CallbackParameter;
 
-  function clsFlashChart($ComponentName, & $Parent){
+  function __construct($ComponentName, & $Parent){
     $this->Name = $ComponentName;
     $this->ComponentType = "FlashChart";
     $this->Visible = true;
@@ -2789,7 +2790,7 @@ class clsQuadraticPath {
   public $x3;
   public $y3;
   
-  function clsQuadraticPath($nx1, $ny1, $nx2, $ny2, $nx3, $ny3) {
+  function __construct($nx1, $ny1, $nx2, $ny2, $nx3, $ny3) {
     $this->x1 = $nx1;
     $this->y1 = $ny1;
     $this->x2 = $nx2;
@@ -2812,7 +2813,7 @@ class clsQuadraticPaths {
   public $MinX;
   public $MinY;
   
-  function clsQuadraticPaths() {
+  function __construct() {
     $this->paths = array();
   }
   
@@ -3038,7 +3039,7 @@ class clsMasterPageTemplate {
   public $Attributes;
   public $HTML;
   
-  public $CCSEvents;
+  public $CCSEvents = array();
   public $CCSEventResult;
   
   public $Visible;
@@ -3048,7 +3049,7 @@ class clsMasterPageTemplate {
   public $TemplateSource = "";
   public $TemplatePathValue;
   
-  function clsMasterPageTemplate() {
+  function __construct() {
     $this->Visible = true;
     $this->Redirect = "";
   }

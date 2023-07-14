@@ -1,0 +1,17 @@
+{
+    "name": "app/mvc",
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ilgner",
+            "email": "ilgner.nascimento@plurya.com"
+        }
+    ]
+}

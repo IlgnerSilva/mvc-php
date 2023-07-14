@@ -117,7 +117,7 @@ class DB_Adapter
  }
 
  function PageCount() {
-  return $this->PageSize && $this->RecordsCount != "CCS not counted" ? ceil($this->RecordsCount / $this->PageSize) : 1;
+  return $this->PageSize && $this->RecordsCount != "CCS not counted" ? ceil((int)$this->RecordsCount / $this->PageSize) : 1;
  }
 
  function query($SQL) {

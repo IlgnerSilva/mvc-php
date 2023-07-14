@@ -1,15 +1,11 @@
 <?php
-define("RelativePath", dirname(__DIR__));
-define("PathToCurrentPage", "/app/classes/");
-define("FileName", "User.php");
-require_once RelativePath . "/config/Common.php";
-class User{
-    private $db;
-    private $sql;
+require_once "Query.php";
+class User extends Query{
+    private $query;
     public function __construct(){
-        $this->db = new clsDBapp();
+        // $this->query = new Query();
     }
-    public function addUser($nome, $email){
+    public function addUser($table, $nome, $email){
         $fields = array(
             array(
                 "Name" => "nome",
@@ -22,12 +18,10 @@ class User{
                 "DataType" => "ccsText"
             )
         );
-
-        //return CCBuildInsert("teste", $fields, $this->db);
-        $this->sql = CCBuildInsert("teste", $fields, $this->db);
-        $this->db->query($this->sql);
+        $this->dbInsert($table, $fields);
     }
-    public function getUsers(){
-        
+    public function getUsers(array $campos, string $table): array{
+        return $this->dbSelect($campos, $table);
     }
+    
 }

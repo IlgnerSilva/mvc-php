@@ -100,7 +100,7 @@ $MainPage = new clsMainPage();
 //app Connection Class @-BD4F3495
 class clsDBapp extends DB_Adapter
 {
-    function clsDBapp()
+    function __construct()
     {
         $this->Initialize();
     }
@@ -233,7 +233,7 @@ function CCSetCookie($parameter_name, $param_value, $expired = -1, $path = "/", 
 //CCStrip @0-E1370054
 function CCStrip($value)
 {
-  if(get_magic_quotes_gpc() != 0)
+  if(false != 0)
   {
     if(is_array($value))  
       foreach($value as $key=>$val)
@@ -336,27 +336,28 @@ function CCGetDBValue($sql, &$db)
 //CCGetListValues @0-DCBE0F84
 function CCGetListValues(&$db, $sql, $where = "", $order_by = "", $bound_column = "", $text_column = "", $dbformat = "", $datatype = "", $errorclass = "", $fieldname = "", $DSType = dsSQL)
 {
-    $errors = new clsErrors();
-    $values = "";
+  $errors = new clsErrors();
+  $values = "";
     if(!strlen($bound_column))
         $bound_column = 0;
     if(!strlen($text_column))
         $text_column = 1;
     if ($DSType == dsProcedure && ($db->DB == "MSSQL" || $db->DB == "SQLSRV") && count($db->Binds)) 
         $db->execute($sql);
-    else
+        else
         $db->query(CCBuildSQL($sql, $where, $order_by));
-    if ($db->next_record())
-    {
-        do
+        if ($db->next_record())
         {
+          do
+          {
             $bound_column_value = $db->f($bound_column);
             if($bound_column_value === false) {$bound_column_value = "";}
             list($bound_column_value, $errors) = CCParseValue($bound_column_value, $dbformat, $datatype, $errors, $fieldname);
             $values[] = array($bound_column_value, $db->f($text_column));
         } while ($db->next_record());
-    }
-    if (is_string($errorclass)) {
+      }
+      if (is_string($errorclass)) {
+      
         return $values;
     } else {
         $errorclass->AddErrors($errors);
