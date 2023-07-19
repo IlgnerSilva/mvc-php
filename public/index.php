@@ -1,3 +1,3 @@
 <?php 
-//error_reporting(0);
+//error_reporting();
 require_once dirname(__DIR__) . "/app/bootstrap.php";

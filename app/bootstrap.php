@@ -1,10 +1,13 @@
 <?php 
-//error_reporting(0);
+
 require_once dirname(__DIR__) . "/vendor/autoload.php";
+require_once __DIR__ . "/router/web.php";
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->safeLoad();
+// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
 
-require_once __DIR__ . "/classes/User.php";
-require_once __DIR__ . "/classes/Query.php";
-require_once __DIR__ . "/resources/main.php";
+use Slim\Factory\AppFactory;
+
+$app = AppFactory::create();
+
+$app->run();
