@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="./htmx.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <div hx-get="https://randomuser.me/api/?results=1" hx-trigger="revealed" hx-swap="afterend" style="width: 100%;">{{user}}</div> -->
+  <div hx-ext="client-side-templates">
+    <button hx-get="https://randomuser.me/api/?results=1"
+            hx-swap="innerHTML"
+            hx-target="#content"
+            handlebars-template="foo">
+      Click Me
+    </button>
+
+    <p id="content">Start</p>
+
+    <template id="foo">
+      <p> {{gender}}</p>
+    </template>
+  </div>
+
+
+    <!-- <form hx-put="/contact/1" hx-target="this" hx-swap="outerHTML">
+        <div>
+          <label>First Name</label>
+          <input type="text" name="firstName" value="Joe">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" name="lastName" value="Blow">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" value="joe@blow.com">
+        </div>
+        <button class="btn">Submit</button>
+        <button class="btn" hx-get="/contact/1">Cancel</button>
+      </form> -->
+</body>
+
+</html>

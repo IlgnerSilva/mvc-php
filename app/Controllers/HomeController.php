@@ -6,8 +6,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class HomeController{
-    public function run(Response $response, Request $request, $args){
-        $response->getBody()->write("Home constroller");
-        return $response;
+    use \App\Support\Template;
+    public function index(Request $request, Response $response, $args){
+        return $this->render($response, "home", ["name"=>"Eduardo", "year"=>"24"]);
     }
 }
