@@ -1,5 +1,4 @@
 <?php
-
 //DB MySQLi Class @0-8D47C692
 
 /*

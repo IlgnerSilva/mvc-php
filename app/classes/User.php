@@ -1,9 +1,9 @@
 <?php
-require_once "Query.php";
-class User extends Query{
-    private $query;
+ namespace App\classes;
+class User{
+    private $db;
     public function __construct(){
-        // $this->query = new Query();
+        $this->db = new Query();
     }
     public function addUser($table, $nome, $email){
         $fields = array(
@@ -18,10 +18,10 @@ class User extends Query{
                 "DataType" => "ccsText"
             )
         );
-        $this->dbInsert($table, $fields);
+        $this->db->dbInsert($table, $fields);
     }
     public function getUsers(array $campos, string $table): array{
-        return $this->dbSelect($campos, $table);
+        return $this->db->dbFindAll($campos, $table);
     }
     
 }

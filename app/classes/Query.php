@@ -1,4 +1,6 @@
 <?php
+namespace App\classes;
+
 define("RelativePath", dirname(__DIR__));
 define("PathToCurrentPage", "/app/classes/");
 define("FileName", "Query.php");
@@ -8,10 +10,10 @@ class Query{
     private $db;
     private $sql;
     public function __construct(){
-        $this->db = new clsDBapp();
+        $this->db = new \clsDBapp();
     }
 
-    protected function dbSelect(array $campos, $table): array{
+    public function dbFindAll(array $campos, $table): array{
         $this->sql = CCBuildSQL("SELECT ".implode(", ",$campos)." FROM $table");
         $this->db->query($this->sql);
         $retorno = array();
@@ -24,8 +26,15 @@ class Query{
         }
         return $retorno;
     }
-    protected function dbInsert($table, $fields){
+    public function dbFindFirst(string $value, string $field, string $table){
+        $this->sql = CCBuildSQL("SELECT $field FROM $table WHERE $field = '$value'");
+        var_dump($this->sql);
+        var_dump(CCGetDBValue($this->sql, $this->db));
+        die();
+        return CCGetDBValue($this->sql, $this->db);
+    }
+    public function dbInsert(string $table, array $fields){
         $this->sql = CCBuildInsert($table, $fields, $this->db);
-        $this->db->query($this->sql);
+        return $this->db->query($this->sql);
     }
 }
