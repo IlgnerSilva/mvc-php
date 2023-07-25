@@ -1,7 +1,8 @@
 <?php
 
-namespace App\useCase\autenticateUser;
+namespace App\useCase\userUseCase\autenticateUser;
 require_once __DIR__ . "/AutenticateUserUseCase.php";
+use App\useCase\autenticateUser\AuthenticateUserUseCase;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -13,14 +14,17 @@ class AuthenticateUserController
     public function index(Request $request, Response $response, $args)
     {
         try {
-            if (!$request->getParsedBody()["email"] && !$request->getParsedBody()["password"]) {
+            if (!$request->getParsedBody()["email"] || !$request->getParsedBody()["password"]) {
                 return $this->render($response, "login");
             } else {
                 $authenticateUserUseCase = new AuthenticateUserUseCase();
-                $authenticateUserUseCase->execute($request->getParsedBody()["email"], md5($request->getParsedBody()["password"]));
-                var_dump($authenticateUserUseCase);
-                die();
-                return $response->withStatus(200);
+                $logado = $authenticateUserUseCase->execute($request->getParsedBody()["email"], $request->getParsedBody()["password"]);
+                if($logado){
+                    CCSetSession("authorization", $logado);
+                    Header("Location: /");
+                    die();
+                }
+                throw new \ErrorException("User or password invalid.");
             }
         } catch (Exception $err) {
             CCSetSession("msgError",$err->getMessage());

@@ -1,13 +1,12 @@
 <?php
 
-namespace App\useCase\registerUser;
+namespace App\useCase\userUseCase\registerUser;
 require_once __DIR__ . "/RegisterUserUseCase.php";
 
-use ErrorException;
+use App\useCase\userUseCase\registerUser\RegisterUserUseCase;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Psr7\Header;
 
 class RegisterUserController
 {
@@ -17,7 +16,7 @@ class RegisterUserController
     {
         try {
             if (!$request->getParsedBody()["email"] && !$request->getParsedBody()["password"]) {
-                throw new ErrorException("Preencha todos os campos.");
+                return $this->render($response, "register");
             }
             $registerUserUseCase = new RegisterUserUseCase();
             $registerUserUseCase->execute($request->getParsedBody()["email"], md5($request->getParsedBody()["password"]));

@@ -28,9 +28,6 @@ class Query{
     }
     public function dbFindFirst(string $value, string $field, string $table){
         $this->sql = CCBuildSQL("SELECT $field FROM $table WHERE $field = '$value'");
-        var_dump($this->sql);
-        var_dump(CCGetDBValue($this->sql, $this->db));
-        die();
         return CCGetDBValue($this->sql, $this->db);
     }
     public function dbInsert(string $table, array $fields){

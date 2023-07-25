@@ -4,7 +4,8 @@
         "vlucas/phpdotenv": "^5.5",
         "slim/slim": "4.*",
         "slim/psr7": "^1.6",
-        "league/plates": "^3.5"
+        "league/plates": "^3.5",
+        "firebase/php-jwt": "^6.8"
     },
     "autoload": {
         "psr-4": {
