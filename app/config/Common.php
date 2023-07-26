@@ -2098,6 +2098,7 @@ function CCLogoutUser()
     CCSetSession("UserLogin_app", "");
     CCSetSession("GroupID_app", "");
     CCSetSession("UserAddr", "");
+    CCSetSession("authorization", "");
     //session_destroy();
 }
 //End CCLogoutUser

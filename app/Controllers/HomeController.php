@@ -10,7 +10,8 @@ class HomeController
 {
     use \App\Support\Template;
     public function index(Request $request, Response $response, $args)
-    {
+    {   
+        die(CCGetSession("authorization"));
         if(!(CCGetSession("UserLogin_app"))){
             Header("Location: /login");
         }else{

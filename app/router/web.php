@@ -1,9 +1,9 @@
 <?php
 
-require_once dirname(__DIR__) . "/middlewares/middlewareLogin.php";
+require dirname(__DIR__) . "/middlewares/middlewareLogin.php";
 
 use App\Controllers\HomeController;
-$app->get('/', middlewareLogin(), HomeController::class.":index");
+$app->get('/', HomeController::class.":index")->add("middlewareLogin");
 
 use App\useCase\userUseCase\autenticateUser\AuthenticateUserController;
 $app->get('/login', AuthenticateUserController::class.":index");
@@ -16,5 +16,5 @@ $app->post('/register', RegisterUserController::class.":index");
 //Logout
 $app->get('/logout', function(){
     CCLogoutUser();
-    Header("Location: /");
+    Header("Location: /login");
 });

@@ -20,7 +20,7 @@ class AuthenticateUserController
                 $authenticateUserUseCase = new AuthenticateUserUseCase();
                 $logado = $authenticateUserUseCase->execute($request->getParsedBody()["email"], $request->getParsedBody()["password"]);
                 if($logado){
-                    CCSetSession("authorization", $logado);
+                    CCSetSession("authorization", "$logado");
                     Header("Location: /");
                     die();
                 }
