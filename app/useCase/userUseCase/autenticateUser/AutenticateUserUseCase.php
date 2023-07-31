@@ -22,7 +22,6 @@
                 $decode = JWT::decode($encode, new Key($_ENV["KEY"], 'HS256'));
                 print_r(json_encode(["encode"=>"Bearer $encode", "decode"=>$decode]));
                 //var_dump($decode);
-                die();
                 return "Bearer $encode";
             }
             return false;

@@ -13,6 +13,7 @@ class AuthenticateUserController
 
     public function index(Request $request, Response $response, $args)
     {
+        var_dump($_SESSION);
         try {
             if (!$request->getParsedBody()["email"] || !$request->getParsedBody()["password"]) {
                 return $this->render($response, "login");

@@ -8,14 +8,14 @@
     // header('Access-Control-Allow-Headers: Authorization, Content-Type, x-xsrf-token, x_csrftoken, Cache-Control, X-Requested-With');
 
     function middlewareLogin(){
-        $authorization = CCGetSession("authorization");
-        $token = str_replace("Bearer ", "", $authorization);
-        $decode = JWT::decode($authorization, new Key($_ENV["KEY"], 'HS256'));
-        var_dump($_ENV['KEY']);
-        var_dump($token);
-        die();
-        //CCSetSession("TESTE", $decode);
-        return $decode;
+        if(!empty(CCGetSession("authorization"))){
+            $authorization = CCGetSession("authorization");
+            $token = str_replace("Bearer ", "", $authorization);
+            $decode = JWT::decode($token, new Key($_ENV["KEY"], 'HS256'));
+            header("Location: /");
+            //return $decode;
+        }
+        header("Location: /login");
     }
 
 ?>

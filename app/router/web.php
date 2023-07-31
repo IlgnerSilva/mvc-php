@@ -16,5 +16,5 @@ $app->post('/register', RegisterUserController::class.":index");
 //Logout
 $app->get('/logout', function(){
     CCLogoutUser();
-    Header("Location: /login");
+    header("Location: /login");
 });
